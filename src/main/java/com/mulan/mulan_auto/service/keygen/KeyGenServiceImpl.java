@@ -77,4 +77,22 @@ public class KeyGenServiceImpl implements KeyGenService {
 
         return keyGenRepo.save(keyGen);
     }
+
+    public KeyGen keyExpirationDate(Long idKey) {
+        KeyGen keyGen = keyGenRepo.findById(idKey).orElseThrow(() ->
+                new RuntimeException("Không tìm thấy key với id " + idKey));
+        if (keyGen == null) {
+            throw new RuntimeException("Không tìm thấy key với id " + idKey);
+        } else {
+            // lấy ngày hết hạn của key
+            Date expirationDate = keyGen.getEndDate();
+
+            // kiểm tra ngày hết hạn của key
+            Date currentDate = new Date(); // ngày hiện tại
+            if (expirationDate != null && currentDate.after(expirationDate)) {
+                throw new RuntimeException("Key đã hết hạn.");
+            }
+            return keyGen;
+        }
+    }
 }

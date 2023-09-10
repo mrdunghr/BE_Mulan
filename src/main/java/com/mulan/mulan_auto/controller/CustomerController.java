@@ -34,6 +34,11 @@ public class CustomerController {
     @GetMapping("/key-gen")
     public ResponseEntity<List<KeyGen>> keyGen(@RequestParam Long idCustomer) {
         List<KeyGen> keyGenList = customerService.ListOfRentedKeys(idCustomer);
-        return new ResponseEntity<>(keyGenList, HttpStatus.CREATED);
+        return new ResponseEntity<>(keyGenList, HttpStatus.OK);
+    }
+    @GetMapping("/key-expiration-date")
+    public ResponseEntity<KeyGen> keyExpirationDate(@RequestParam Long idKey) {
+        KeyGen keyGen = keyGenService.keyExpirationDate(idKey);
+        return new ResponseEntity<>(keyGen, HttpStatus.OK);
     }
 }
