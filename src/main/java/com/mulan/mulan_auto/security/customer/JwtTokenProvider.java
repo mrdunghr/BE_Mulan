@@ -37,12 +37,14 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + EXPIRATION_TIME);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
+        String prefixedToken = "mrdunghr: " + token;
+        return prefixedToken;
     }
 
     public Authentication getAuthentication(String token) {
