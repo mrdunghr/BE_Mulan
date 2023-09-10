@@ -2,12 +2,14 @@ package com.mulan.mulan_auto.service.customer;
 
 import com.mulan.mulan_auto.entity.AuthenticationType;
 import com.mulan.mulan_auto.entity.customer.Customer;
+import com.mulan.mulan_auto.entity.customer.KeyGen;
 import com.mulan.mulan_auto.repository.ICustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,5 +65,12 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAuthenticationType(AuthenticationType.DATABASE);
         customer.setKeyGens(null);
         return customerRepo.save(customer);
+    }
+
+    @Override
+    public List<KeyGen> ListOfRentedKeys(Long id) {
+        Customer customer = customerRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("Không thấy khách hàng này với id " + id));
+        return customer.getKeyGens();
     }
 }

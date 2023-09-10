@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/customers")
 @CrossOrigin("*")
@@ -25,7 +27,13 @@ public class CustomerController {
     }
 
     @PostMapping("/key-gen")
-    public ResponseEntity<KeyGen> registerCustomer(@RequestBody KeyGen keyGen, @RequestParam Long idCustomer) {
+    public ResponseEntity<KeyGen> keyGen(@RequestBody KeyGen keyGen, @RequestParam Long idCustomer) {
         return new ResponseEntity<>(keyGenService.generateRandom(keyGen, idCustomer), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/key-gen")
+    public ResponseEntity<List<KeyGen>> keyGen(@RequestParam Long idCustomer) {
+        List<KeyGen> keyGenList = customerService.ListOfRentedKeys(idCustomer);
+        return new ResponseEntity<>(keyGenList, HttpStatus.CREATED);
     }
 }
