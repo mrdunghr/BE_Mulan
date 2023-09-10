@@ -95,4 +95,18 @@ public class KeyGenServiceImpl implements KeyGenService {
             return keyGen;
         }
     }
+
+    public boolean checkThePermissionToUseTheKey(Long idKey) {
+        KeyGen keyGen = keyGenRepo.findById(idKey).orElseThrow(() ->
+                new RuntimeException("Không tìm thấy key với id " + idKey));
+
+        InfoCustomerKey infoCustomerKey = new InfoCustomerKey();
+
+        if (keyGen.getComputerName().equals(infoCustomerKey.getComputerName()) &&
+                keyGen.getIpAddress().equals(infoCustomerKey.getIpAddress())) {
+            return true;
+        } else {
+            throw new SecurityException("Bạn không có quyền sử dụng key này");
+        }
+    }
 }

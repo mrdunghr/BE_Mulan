@@ -41,4 +41,10 @@ public class CustomerController {
         KeyGen keyGen = keyGenService.keyExpirationDate(idKey);
         return new ResponseEntity<>(keyGen, HttpStatus.OK);
     }
+
+    @GetMapping("/permission-key")
+    public ResponseEntity<Boolean> checkThePermissionToUseTheKey(@RequestParam Long idKey) {
+        Boolean keyGen = keyGenService.checkThePermissionToUseTheKey(idKey);
+        return new ResponseEntity<>(keyGen, HttpStatus.OK);
+    }
 }
