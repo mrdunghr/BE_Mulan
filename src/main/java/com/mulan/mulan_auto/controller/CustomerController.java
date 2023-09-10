@@ -2,6 +2,7 @@ package com.mulan.mulan_auto.controller;
 
 import com.mulan.mulan_auto.entity.customer.Customer;
 import com.mulan.mulan_auto.entity.customer.KeyGen;
+import com.mulan.mulan_auto.entity.customer.dto.LoginCustomer;
 import com.mulan.mulan_auto.service.customer.CustomerService;
 import com.mulan.mulan_auto.service.keygen.KeyGenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,11 @@ public class CustomerController {
     public ResponseEntity<Boolean> checkThePermissionToUseTheKey(@RequestParam Long idKey) {
         Boolean keyGen = keyGenService.checkThePermissionToUseTheKey(idKey);
         return new ResponseEntity<>(keyGen, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginCustomer customer) {
+        String token = customerService.login(customer.getUsername(), customer.getPassword());
+        return ResponseEntity.ok(token);
     }
 }

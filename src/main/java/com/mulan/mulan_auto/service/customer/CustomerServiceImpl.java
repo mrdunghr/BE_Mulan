@@ -4,6 +4,7 @@ import com.mulan.mulan_auto.entity.AuthenticationType;
 import com.mulan.mulan_auto.entity.customer.Customer;
 import com.mulan.mulan_auto.entity.customer.KeyGen;
 import com.mulan.mulan_auto.repository.ICustomerRepo;
+import com.mulan.mulan_auto.security.customer.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ICustomerRepo customerRepo;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Iterable<Customer> findAll() {
@@ -72,5 +75,18 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepo.findById(id).orElseThrow(
                 () -> new RuntimeException("Không thấy khách hàng này với id " + id));
         return customer.getKeyGens();
+    }
+
+    public String login(String username, String password) {
+        // Kiểm tra tên đăng nhập và mật khẩu của khách hàng ở đây.
+        // Nếu thông tin đúng, tạo mã JWT và trả về.
+
+        Customer customer = customerRepo.findCustomerByUsername(username);
+
+        if (customer != null && password.equals(customer.getPassword())) {
+            return jwtTokenProvider.createToken(customer); // Tạo mã JWT
+        } else {
+            throw new RuntimeException("Tên đăng nhập hoặc mật khẩu không đúng");
+        }
     }
 }
