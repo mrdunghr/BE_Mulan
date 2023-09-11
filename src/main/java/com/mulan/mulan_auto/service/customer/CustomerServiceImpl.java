@@ -84,7 +84,11 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepo.findCustomerByUsername(username);
 
         if (customer != null && password.equals(customer.getPassword())) {
-            return jwtTokenProvider.createToken(customer); // Tạo mã JWT
+            if (customer.isEnabled()) {
+                return jwtTokenProvider.createToken(customer); // Tạo mã JWT
+            } else {
+                throw new RuntimeException("Tài khoản chưa được kích hoạt.");
+            }
         } else {
             throw new RuntimeException("Tên đăng nhập hoặc mật khẩu không đúng");
         }
