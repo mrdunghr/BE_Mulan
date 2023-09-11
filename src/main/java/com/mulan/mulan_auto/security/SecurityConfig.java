@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable() // Tắt CSRF (Cross-Site Request Forgery) cho ứng dụng RESTful API.
             .authorizeRequests()
-            .antMatchers("/api/v1/customers/login/**").permitAll() // Cho phép truy cập các endpoint công khai mà không cần xác thực.
+            .antMatchers("/api/v1/customers/login/**", "/api/v1/customers/permission-key/**").permitAll() // Cho phép truy cập các endpoint công khai mà không cần xác thực.
             .anyRequest().authenticated(); // Tất cả các request khác đều yêu cầu xác thực JWT.
     }
 }
