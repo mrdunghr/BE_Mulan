@@ -54,4 +54,9 @@ public class CustomerController {
         String token = customerService.login(customer.getUsername(), customer.getPassword());
         return ResponseEntity.ok(token);
     }
+
+    @GetMapping("/check-active/{username}")
+    public boolean checkActiveCustomer(@PathVariable String username) {
+        return customerService.checkActiveCustomer(username);
+    }
 }

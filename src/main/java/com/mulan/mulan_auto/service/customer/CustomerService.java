@@ -10,4 +10,5 @@ public interface CustomerService extends IGeneralService<Customer> {
     public Customer register(Customer customer);
     public List<KeyGen> ListOfRentedKeys (Long id);
     public String login(String username, String password);
+    public boolean checkActiveCustomer(String username);
 }

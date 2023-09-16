@@ -93,4 +93,12 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("Tên đăng nhập hoặc mật khẩu không đúng");
         }
     }
+
+    public boolean checkActiveCustomer(String username){
+        Customer customer = customerRepo.findCustomerByUsername(username);
+        if (customer.isEnabled()) {
+            return true;
+        }
+        throw new RuntimeException("Tài khoản chưa được kích hoạt. Hoặc bị khóa");
+    }
 }

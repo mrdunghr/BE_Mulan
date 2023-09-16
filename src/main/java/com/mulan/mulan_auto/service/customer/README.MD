@@ -28,3 +28,7 @@ http://localhost:8080/api/v1/customers/login
     "password": "123123123"
 }
 ```
+
+GET kiểm tra tài khoản được kích hoạt hay chưa
+
+http://localhost:8080/api/v1/customers/check-active/mrdunghr
