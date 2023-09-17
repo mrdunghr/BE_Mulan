@@ -24,6 +24,7 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(customer.getUsername());
 
         // Thêm các thông tin tùy chỉnh vào claims
+        claims.put("idCustomer", customer.getId());
         claims.put("username", customer.getUsername());
         claims.put("email", customer.getEmail());
         claims.put("phone", customer.getPhone());
