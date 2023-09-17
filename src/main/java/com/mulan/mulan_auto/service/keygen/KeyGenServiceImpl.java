@@ -78,6 +78,11 @@ public class KeyGenServiceImpl implements KeyGenService {
         return keyGenRepo.save(keyGen);
     }
 
+    @Override
+    public Long getIdCustomerByCustomerName(String customerName) {
+        return customerRepo.findCustomerIdByUsername(customerName);
+    }
+
     public KeyGen keyExpirationDate(Long idKey) {
         KeyGen keyGen = keyGenRepo.findById(idKey).orElseThrow(() ->
                 new RuntimeException("Không tìm thấy key với id " + idKey));

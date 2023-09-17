@@ -59,4 +59,9 @@ public class CustomerController {
     public boolean checkActiveCustomer(@PathVariable String username) {
         return customerService.checkActiveCustomer(username);
     }
+
+    @GetMapping("/{username}")
+    public Long getIdForCustomer(@PathVariable String username) {
+        return keyGenService.getIdCustomerByCustomerName(username);
+    }
 }
